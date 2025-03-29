@@ -1,58 +1,149 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的世界PVP博客</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>华世轩的博客</title>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f2f5;
+        }
+
+        #password-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        #main-content {
+            display: none;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        input {
+            padding: 8px;
+            margin: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 8px 20px;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .blog-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .article-list {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .article-item {
+            margin: 15px 0;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+
+        .action-section {
+            margin: 30px 0;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>欢迎来到我的世界PVP博客</h1>
-        <nav>
-            <ul>
-                <li><a href="#about">关于我们</a></li>
-                <li><a href="pvp-tips.html">PVP技巧</a></li>
-                <li><a href="#news">最新消息</a></li>
-                <li><a href="#contact">联系我们</a></li>
-            </ul>
-        </nav>
-    </header>
 
-    <main>
-        <section id="about" class="card">
-            <h2>关于我们</h2>
-            <p>这是一个专注于《我的世界》PVP的博客，分享技巧、新闻和社区活动。</p>
-        </section>
+<div id="password-container">
+    <h2>欢迎访问华世轩的博客</h2>
+    <p>请输入访问密码：</p>
+    <input type="password" id="password" placeholder="请输入密码">
+    <button onclick="checkPassword()" style="background-color: #007bff;">进入</button>
+    <div id="error-message" class="error"></div>
+</div>
 
-        <section id="pvp-tips" class="card">
-            <h2>PVP技巧</h2>
-            <p>点击下面的链接查看详细的PVP技巧。</p>
-            <a href="pvp-tips.html" class="button">查看PVP技巧</a>
-        </section>
+<div id="main-content">
+    <div class="blog-header">
+        <h1>华世轩的个人博客</h1>
+        <p>分享技术心得与生活感悟</p>
+    </div>
 
-        <section id="news" class="card">
-            <h2>最新消息</h2>
-            <p>关注我们的最新动态，获取游戏更新和活动信息。</p>
-        </section>
-
-        <section id="contact" class="card">
-            <h2>联系我们</h2>
-            <p>如有任何问题，请通过电子邮件与我们联系。</p>
-        </section>
-    </main>
-
-    <footer>
-        <div class="footer-content">
-            <p>&copy; 2024 我的世界PVP博客. 保留所有权利.</p>
-            <div class="social-links">
-                <a href="https://twitter.com" target="_blank">Twitter</a>
-                <a href="https://facebook.com" target="_blank">Facebook</a>
-                <a href="https://instagram.com" target="_blank">Instagram</a>
-                <a href="https://youtube.com" target="_blank">YouTube</a>
-            </div>
-            <p><a href="#about">关于我们</a> | <a href="#news">最新消息</a> | <a href="#contact">联系我们</a></p>
+    <div class="article-list">
+        <h2>最新文章</h2>
+        <div class="article-item">
+            <h3>前端开发最佳实践</h3>
+            <p>探索现代Web开发的最新趋势与技术实践...</p>
+            <small>2023年10月15日</small>
         </div>
-    </footer>
+        <div class="article-item">
+            <h3>人工智能伦理思考</h3>
+            <p>关于AI技术发展带来的社会影响与伦理讨论...</p>
+            <small>2023年10月12日</small>
+        </div>
+    </div>
+
+    <div class="action-section">
+        <button 
+            onclick="window.open('http://ux2e.com', '_blank')" 
+            style="padding: 12px 25px; font-size: 16px; background-color: #28a745;">
+            按钮
+        </button>
+        <p style="color: #666; margin-top: 10px;">点击探索精彩内容</p>
+    </div>
+
+    <div class="contact-info" style="margin-top: 30px; text-align: center;">
+        <h3>联系我</h3>
+        <p>📧 huashixuan@example.com</p>
+        <p>📱 微信：hsx_blog</p>
+    </div>
+</div>
+
+<script>
+    function checkPassword() {
+        const password = document.getElementById('password').value;
+        const errorMessage = document.getElementById('error-message');
+        
+        if (password === "63") {
+            document.getElementById('password-container').style.display = 'none';
+            document.getElementById('main-content').style.display = 'block';
+        } else {
+            errorMessage.textContent = "密码错误，请重试！";
+        }
+    }
+
+    // 回车键触发
+    document.getElementById('password').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            checkPassword();
+        }
+    });
+</script>
+
 </body>
 </html>
