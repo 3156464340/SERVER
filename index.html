@@ -2,148 +2,410 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>华世轩的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hi, 这里是乐鱼丸服务器</title>
+
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+    
+    <link href="https://cdn.bootcdn.net/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <link rel="icon" href="/avatar.png" type="image/png">
+    <script src="/static/bootstrap.bundle.min.js"></script>
     <style>
+        :root {
+            --primary-color: #00aaff;
+            --primary-hover-color: #0088cc;
+            --text-color: #f0f0f0;
+            --card-bg-blur-color: rgba(20, 20, 30, 0.7); /* 稍微调高一点透明度以便背景更突出 */
+            --card-shadow: 0 10px 35px rgba(0,0,0,0.45);
+            --avatar-border-color: var(--primary-color);
+            --footer-bg-color: rgba(0,0,0,0.3);
+            --footer-text-color: rgba(255, 255, 255, 0.7);
+        }
+
         body {
-            font-family: 'Microsoft YaHei', sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #f0f2f5;
+            font-family: 'Roboto', 'Microsoft YaHei', sans-serif;
+            color: var(--text-color);
+            background-image: url('https://cloud.jsms2.cn/api/image/auto.php');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between; /* 让内容和页脚能撑开 */
+            min-height: 100vh;
+            padding-top: 20px; /* 给顶部一些空间 */
+            overflow-x: hidden;
         }
 
-        #password-container {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+        .profile-card-wrapper {
+            flex-grow: 1; /* 让卡片区域占据可用空间 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 20px 0; /* 上下padding */
+        }
+
+        .profile-card {
+            background: var(--card-bg-blur-color);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 30px 40px;
+            border-radius: 25px;
+            box-shadow: var(--card-shadow);
             text-align: center;
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            max-width: 680px; /* 略微加宽以容纳更多信息 */
+            width: 90%;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        #main-content {
-            display: none;
-            max-width: 800px;
-            margin: 0 auto;
+        .avatar-container {
+            margin-bottom: 20px;
         }
 
-        input {
-            padding: 8px;
-            margin: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+        .avatar {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            border: 5px solid var(--avatar-border-color);
+            object-fit: cover;
+            box-shadow: 0 0 20px rgba(var(--avatar-border-color), 0.6);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: pulseAvatar 2.5s infinite ease-in-out;
         }
 
-        button {
-            padding: 8px 20px;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: opacity 0.3s;
+        .avatar:hover {
+            transform: scale(1.1) rotate(3deg);
+            box-shadow: 0 0 30px rgba(var(--avatar-border-color), 0.9);
+        }
+        
+        @keyframes pulseAvatar {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.04); }
+            100% { transform: scale(1); }
         }
 
-        button:hover {
-            opacity: 0.9;
+        .nickname {
+            font-size: 2.6em;
+            margin-bottom: 15px;
+            color: #fff;
+            font-weight: bold;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.6);
         }
 
-        .blog-header {
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* 响应式网格 */
+            gap: 10px; /* 网格间距 */
+            margin-bottom: 20px;
+        }
+
+        .info-item {
+            font-size: 1.1em;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start; /* 左对齐 */
+            text-align: left;
+            word-break: break-all;
+            padding: 8px 0; /* 增加一点上下内边距 */
+            transition: transform 0.2s ease;
+        }
+        .info-item:hover {
+            transform: translateX(3px);
+        }
+
+        .info-item i {
+            color: var(--primary-color);
+            margin-right: 12px;
+            font-size: 1.3em;
+            width: 22px;
             text-align: center;
-            margin-bottom: 40px;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+        
+        .info-item:hover i {
+            transform: scale(1.15) rotate(5deg);
+            color: var(--primary-hover-color);
         }
 
-        .article-list {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        .info-item a, .info-item span {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
         }
 
-        .article-item {
-            margin: 15px 0;
-            padding: 10px;
-            border-bottom: 1px solid #eee;
+        .info-item a:hover {
+            color: var(--primary-color);
+            text-shadow: 0 0 8px var(--primary-color);
+        }
+        
+        .social-links {
+            list-style: none;
+            padding: 0;
+            margin: 25px 0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
         }
 
-        .error {
-            color: red;
-            margin-top: 10px;
+        .social-links li { margin: 0 10px; }
+
+        .social-links a {
+            font-size: 2.1em;
+            transition: color 0.3s ease, transform 0.3s ease;
+            display: inline-block;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        
+        .social-links a .fa-qq { color: #12b7f5; }
+        .social-links a .fa-bilibili { color: #fb7299; }
+        .social-links a .fa-tiktok { color: #fe2c55; }
+        .social-links a .fa-github { color: #cdd1d5; }
+
+        .social-links a:hover {
+            color: var(--primary-color) !important;
+            transform: translateY(-5px) scale(1.12);
         }
 
-        .action-section {
-            margin: 30px 0;
+        .section-title {
+            color: var(--primary-color);
+            margin-top: 30px;
+            margin-bottom: 15px;
             text-align: center;
+            font-size: 1.8em;
+            font-weight: 600;
         }
+        
+        .about-me, .hobbies-section, .projects-section { /* Added .projects-section here */
+            text-align: left;
+            line-height: 1.8;
+            font-size: 1.05em;
+        }
+        
+        .about-me p, .hobbies-section ul li, .projects-section ul li { /* Added .projects-section ul li */
+            margin-bottom: 10px;
+        }
+
+        .hobbies-section ul, .projects-section ul { /* Added .projects-section ul */
+            list-style: none;
+            padding-left: 0;
+        }
+        .hobbies-section li, .projects-section li { /* Added .projects-section li */
+            display: flex;
+            align-items: center;
+            transition: transform 0.2s ease; /* Added for hover effect consistency */
+        }
+        .hobbies-section li:hover, .projects-section li:hover { /* Added for hover effect consistency */
+            transform: translateX(3px);
+        }
+
+        .hobbies-section li i, .projects-section li i { /* Added .projects-section li i */
+            color: var(--primary-color);
+            margin-right: 10px;
+            font-size: 1.2em;
+            width: 20px;
+            text-align: center;
+            transition: transform 0.3s ease, color 0.3s ease; /* Added for hover effect consistency */
+        }
+        .hobbies-section li:hover i, .projects-section li:hover i { /* Added for hover effect consistency */
+            transform: scale(1.15) rotate(5deg);
+            color: var(--primary-hover-color);
+        }
+
+        /* Specific style for links within project items to match info-item links */
+        .projects-section li a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
+        .projects-section li a:hover {
+            color: var(--primary-color);
+            text-shadow: 0 0 8px var(--primary-color);
+        }
+
+
+        footer {
+            width: 100%;
+            text-align: center;
+            padding: 20px 15px;
+            margin-top: 40px; /* 与卡片保持距离 */
+            font-size: 0.9em;
+            color: var(--footer-text-color);
+            background-color: var(--footer-bg-color);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        footer p {
+            margin-bottom: 5px;
+        }
+        footer a {
+            color: var(--footer-text-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        footer a:hover {
+            color: var(--primary-color);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .profile-card {
+                padding: 25px 20px;
+                width: 95%;
+            }
+            .nickname { font-size: 2.2em; }
+            .avatar { width: 110px; height: 110px; }
+            .info-grid { grid-template-columns: 1fr; /* 单列显示 */ }
+            .info-item { font-size: 1em; justify-content: center; text-align: center; } /* 小屏幕居中显示 */
+            .info-item i { margin-right: 8px; }
+            .social-links a { font-size: 1.9em; }
+            .section-title { font-size: 1.6em; }
+            .about-me, .hobbies-section, .projects-section { /* Added .projects-section */
+                 font-size: 0.95em; 
+                 text-align: center;
+            }
+            .hobbies-section li, .projects-section li { /* Added .projects-section li */
+                 justify-content: center; 
+            }
+        }
+         @media (max-width: 480px) {
+            .social-links li { margin: 8px 7px; }
+            .nickname { font-size: 2em; }
+            .avatar { width: 100px; height: 100px; }
+         }
     </style>
 </head>
 <body>
 
-<div id="password-container">
-    <h2>欢迎访问华世轩的博客</h2>
-    <p>请输入访问密码：</p>
-    <input type="password" id="password" placeholder="请输入密码">
-    <button onclick="checkPassword()" style="background-color: #007bff;">进入</button>
-    <div id="error-message" class="error"></div>
-</div>
+    <div class="profile-card-wrapper" id="container">
+        <div class="profile-card animate__animated animate__zoomIn">
+            <div class="avatar-container animate__animated animate__fadeInDown" data-animate-delay-custom="0.3s">
+                <img src="/avatar.png" alt="Missbehses" class="avatar" id="userAvatar">
+            </div>
+            
+            <h1 class="nickname animate__animated animate__fadeInUp" data-animate-delay-custom="0.5s">Missbehses</h1>
 
-<div id="main-content">
-    <div class="blog-header">
-        <h1>华世轩的个人博客</h1>
-        <p>分享技术心得与生活感悟</p>
-    </div>
+            <div class="info-grid">
+                <div class="info-item animate__animated animate__fadeInUp" data-animate-delay-custom="0.7s">
+                    <i class="fas fa-envelope"></i>
+                    <a href="mailto:jsgzem@163.com">3156464340@qq.com</a>
+                </div>
+                <div class="info-item animate__animated animate__fadeInUp" data-animate-delay-custom="0.8s">
+                    <i class="fas fa-birthday-cake"></i>
+                    <span><span id="age">计算中...</span> 岁</span>
+                </div>
+                <div class="info-item animate__animated animate__fadeInUp" data-animate-delay-custom="0.9s">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>湖北 / 咸宁</span>
+                </div>
+            </div>
 
-    <div class="article-list">
-        <h2>最新文章</h2>
-        <div class="article-item">
-            <h3>前端开发最佳实践</h3>
-            <p>探索现代Web开发的最新趋势与技术实践...</p>
-            <small>2023年10月15日</small>
+            <ul class="social-links animate__animated animate__fadeInUp" data-animate-delay-custom="1.0s">
+                <li><a href="https://d.4rxb.com/s/ukzcqs" target="_blank" title="QQ"><i class="fab fa-qq"></i></a></li>
+                <li><a href="https://space.bilibili.com/3494376179239023" target="_blank" title="Bilibili"><i class="fab fa-bilibili"></i></a></li>
+                <li><a href="https://v.douyin.com/QxXXNoUdGB0/" target="_blank" title="抖音"><i class="fab fa-tiktok"></i></a></li>
+                <li><a href="https://github.com/jsms2" target="_blank" title="Github"><i class="fab fa-github"></i></a></li>
+            </ul>
+
+            <div class="about-me">
+                <h2 class="section-title animate__animated animate__fadeIn" data-animate-delay-custom="1.2s">关于我</h2>
+                <p class="animate__animated animate__fadeInLeft" data-animate-delay-custom="1.3s">你好，我是 Missbehses！</p>
+                <p class="animate__animated animate__fadeInLeft" data-animate-delay-custom="1.4s">一个热爱探索新技术的数字住民，喜欢在代码的世界里遨游，也享受在虚拟空间中创造和分享。</p>
+                <p class="animate__animated animate__fadeInLeft" data-animate-delay-custom="1.5s">你可以在上面的链接中找到我活跃的平台。欢迎交流，一起进步！</p>
+            </div>
+
+            <div class="projects-section">
+                <h2 class="section-title animate__animated animate__fadeIn" data-animate-delay-custom="1.7s">Server聊天</h2>
+                <ul class="animate__animated animate__fadeInUp" data-animate-delay-custom="1.8s">
+                    <li>
+                        <i class="fas fa-link"></i>
+                        <a href="https://ssso.ovh/10007" target="_blank" title="加入聊天频道">加入聊天频道</a>
+                    </li>
+                </ul>
+                <ul class="animate__animated animate__fadeInUp" data-animate-delay-custom="1.9s">
+                    <li>
+                        <i class="fas fa-server"></i>
+                        <a href="https://qm.qq.com/q/kUL3OIapos" target="_blank" title="加入QQ群">加入QQ群</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="hobbies-section">
+                <h2 class="section-title animate__animated animate__fadeIn" data-animate-delay-custom="2.1s">我的Minecraft Server</h2>
+                <ul class="animate__animated animate__fadeInUp" data-animate-delay-custom="2.2s">
+                    <li><i class="fas fa-code"></i> 优秀的代码</li>
+                    <li><i class="fas fa-gamepad"></i> 高质量的玩法</li>
+                    <li><i class="fas fa-film"></i> 和善的玩家</li>
+                    <li><i class="fas fa-book-reader"></i> 知识的深厚</li>
+                </ul>
+            </div>
+
+
+            
+
+
         </div>
-        <div class="article-item">
-            <h3>人工智能伦理思考</h3>
-            <p>关于AI技术发展带来的社会影响与伦理讨论...</p>
-            <small>2023年10月12日</small>
-        </div>
     </div>
 
-    <div class="action-section">
-        <button 
-            onclick="window.open('http://ux2e.com', '_blank')" 
-            style="padding: 12px 25px; font-size: 16px; background-color: #28a745;">
-            按钮
-        </button>
-        <p style="color: #666; margin-top: 10px;">点击探索精彩内容</p>
-    </div>
+    <footer class="animate__animated animate__fadeInUp" data-animate-delay-custom="2.4s">
+        <p>© <span id="currentYear"></span> Missbehses. All Rights Reserved.</p>
+        <p>
+            <a href="https://beian.miit.gov.cn/" target="_blank">琼ICP备2025054934号-2</a>
+        </p>
+    </footer>
 
-    <div class="contact-info" style="margin-top: 30px; text-align: center;">
-        <h3>联系我</h3>
-        <p>📧 huashixuan@example.com</p>
-        <p>📱 微信：hsx_blog</p>
-    </div>
-</div>
-
-<script>
-    function checkPassword() {
-        const password = document.getElementById('password').value;
-        const errorMessage = document.getElementById('error-message');
-        
-        if (password === "63") {
-            document.getElementById('password-container').style.display = 'none';
-            document.getElementById('main-content').style.display = 'block';
-        } else {
-            errorMessage.textContent = "密码错误，请重试！";
+    
+    <script>
+        // 年龄计算
+        function calculateAge(birthDateString) {
+            const birthDate = new Date(birthDateString.replace(/\//g, '-')); // 兼容 Safari
+            const today = new Date();
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const m = today.getMonth() - birthDate.getMonth();
+            if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+            return age;
         }
-    }
-
-    // 回车键触发
-    document.getElementById('password').addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            checkPassword();
+        const ageSpan = document.getElementById('age');
+        if (ageSpan) {
+            ageSpan.textContent = calculateAge('2011/06/18');
         }
-    });
-</script>
 
+        // 动态年份
+        const currentYearSpan = document.getElementById('currentYear');
+        if (currentYearSpan) {
+            currentYearSpan.textContent = new Date().getFullYear();
+        }
+
+        // 卡片悬浮效果 (可选，仅桌面端)
+        const profileCard = document.querySelector('.profile-card');
+        if (profileCard && !window.matchMedia("(max-width: 768px)").matches) {
+            profileCard.addEventListener('mousemove', (e) => {
+                const rect = profileCard.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                const rotateX = -(y / rect.height * 6); 
+                const rotateY = (x / rect.width * 6);
+                profileCard.style.transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.01)`;
+                profileCard.style.transition = 'transform 0.05s linear';
+            });
+            profileCard.addEventListener('mouseleave', () => {
+                profileCard.style.transform = 'perspective(1200px) rotateX(0deg) rotateY(0deg) scale(1)';
+                profileCard.style.transition = 'transform 0.4s ease-out';
+            });
+        }
+
+        // 自定义 Animate.css 延迟加载
+        document.addEventListener('DOMContentLoaded', () => {
+            const animatedElements = document.querySelectorAll('[data-animate-delay-custom]');
+            animatedElements.forEach(el => {
+                el.style.animationDelay = el.dataset.animateDelayCustom;
+            });
+        });
+    </script>
 </body>
 </html>
